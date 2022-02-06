@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ConcurrentExtension.class)
-public class Junit5ConcurrentTestAnnotationTest {
+public class ConcurrentTopicUpdateTest {
 
   static class Topic {
 
