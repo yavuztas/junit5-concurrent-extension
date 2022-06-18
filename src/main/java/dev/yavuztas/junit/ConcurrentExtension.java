@@ -91,7 +91,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
   }
 
   private void printInfo(Method testMethod) {
-    final String message = String.format("Thread#%s > %s(%s)",
+    final String message = String.format("Thread#%s - %s(%s)",
         Thread.currentThread().getId(),
         testMethod.getName(),
         ClassUtils.nullSafeToString(Class::getSimpleName, testMethod.getParameterTypes())
