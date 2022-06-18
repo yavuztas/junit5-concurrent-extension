@@ -39,7 +39,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
     final Method testMethod = invocationContext.getExecutable();
     final Optional<ConcurrentTest> annotation =
         AnnotationUtils.findAnnotation(testMethod, ConcurrentTest.class);
-    if (annotation.isEmpty()) {
+    if (!annotation.isPresent()) {
       invocation.proceed();
       return;
     }
@@ -109,7 +109,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
   private Timeout timeout(Class<?> clazz, Method method) {
     final Optional<Timeout> methodTimeout = AnnotationUtils
         .findAnnotation(method, Timeout.class);
-    if (methodTimeout.isEmpty()) {
+    if (!methodTimeout.isPresent()) {
       // global timeout on class level or null
       return AnnotationUtils.findAnnotation(clazz, Timeout.class).orElse(null);
     }
