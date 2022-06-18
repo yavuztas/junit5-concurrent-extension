@@ -15,10 +15,23 @@ import org.junit.jupiter.api.Test;
 public @interface ConcurrentTest {
 
   /**
-   * Can be overriden by:
+   * Parallel thread count, default is 10. This can be overriden by:
    * <pre>ConcurrentExtension.withGlobalThreadCount</pre>
+   *
+   * @return thread count
    */
   int count() default 10;
 
+  /**
+   * Set true to print extra information in the following format:
+   * <pre>
+   *   Thread#19 > testMethodName()
+   *   Thread#20 > testMethodName()
+   *   ...
+   * </pre><br>
+   * Default is false.
+   *
+   * @return true or false
+   */
   boolean printInfo() default false;
 }

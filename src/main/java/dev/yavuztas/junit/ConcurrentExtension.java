@@ -20,9 +20,10 @@ public class ConcurrentExtension implements InvocationInterceptor {
   private int globalThreadCount;
 
   /**
-   * Overrides @{@link ConcurrentTest} threadCount parameter globally.
+   * Overrides @{@link ConcurrentTest} count parameter globally.
    *
    * @param threadCount a positive number
+   * @return ConcurrentExtension
    */
   public static ConcurrentExtension withGlobalThreadCount(int threadCount) {
     final ConcurrentExtension instance = new ConcurrentExtension();
