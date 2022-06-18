@@ -1,5 +1,5 @@
 # junit5-concurrent-extension
-Junit 5 Extension for @ConcurrentTest
+Junit 5 Extension for *@ConcurrentTest*
 
 An extension for Junit 5 to execute concurrency tests with ease, by using a single annotation, *@ConcurrentTest*.
 
@@ -26,7 +26,9 @@ public class ConcurrencyTest {
 
 }
 ```
-For a more detailed example:
+See other examples:
+- [Junit5DynamicExtensionTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/Junit5DynamicExtensionTest.java)
+- [Junit5TimeoutCapableConcurrentTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/Junit5TimeoutCapableConcurrentTest.java)
 - [ConcurrentTopicUpdateTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/ConcurrentTopicUpdateTest.java)
 
 ### Note
