@@ -13,6 +13,12 @@ import org.junit.jupiter.api.Test;
 @Retention(RUNTIME)
 @Test
 public @interface ConcurrentTest {
-    int count() default 10;
-    boolean printInfo() default false;
+
+  /**
+   * Can be overriden by:
+   * <pre>ConcurrentExtension.withGlobalThreadCount</pre>
+   */
+  int count() default 10;
+
+  boolean printInfo() default false;
 }
