@@ -22,22 +22,18 @@ test {
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
-    archiveClassifier = 'sources'
+    classifier 'sources'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier "javadoc"
     from javadoc.destinationDir
+    classifier 'javadoc'
 }
 
 artifacts {
     archives jar
     archives sourceJar
     archives javadocJar
-}
-
-signing {
-    sign configurations.archives
 }
 
 ext {
@@ -55,33 +51,8 @@ publishing {
             version = project.version
 
             from components.java
-
-            // create the sign pom artifact
-            pom.withXml {
-                def pomFile = file("${project.buildDir}/generated-pom.xml")
-                writeTo(pomFile)
-                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
-                artifact(pomAscFile) {
-                    classifier = null
-                    extension = 'pom.asc'
-                }
-            }
-
             artifact sourceJar
             artifact javadocJar
-
-            // create the signed artifacts
-            project.tasks.signArchives.signatureFiles.each {
-                artifact(it) {
-                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
-                    if (matcher.find()) {
-                        classifier = matcher.group(1)
-                    } else {
-                        classifier = null
-                    }
-                    extension = 'jar.asc'
-                }
-            }
 
             pom {
                 name = 'Junit5 Concurrent Extension'
@@ -121,6 +92,11 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    sign configurations.archives
+    sign publishing.publications.mavenJava
 }
 
 model {
