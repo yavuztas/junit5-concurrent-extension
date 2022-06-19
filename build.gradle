@@ -40,6 +40,13 @@ signing {
     sign configurations.archives
 }
 
+ext {
+    isRelease = !String.valueOf(project.version).toLowerCase().contains('snapshot')
+    repoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+    snapshotRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    println "Inferred version ${project.version}"
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -83,8 +90,8 @@ publishing {
 
                 scm {
                     url = 'https://github.com/yavuztas/junit5-concurrent-extension'
-                    connection = 'scm:https://github.com/yavuztas/junit5-concurrent-extension.git'
-                    developerConnection = 'scm:git:https://github.com/yavuztas/junit5-concurrent-extension.git'
+                    connection = 'scm:git:git://github.com/yavuztas/junit5-concurrent-extension.git'
+                    developerConnection = 'scm:git:ssh://github.com/yavuztas/junit5-concurrent-extension.git'
                 }
 
                 licenses {
@@ -105,7 +112,7 @@ publishing {
             }
             repositories {
                 maven {
-                    url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                    url = "${isRelease ? repoUrl : snapshotRepoUrl}"
                     credentials {
                         username "${sonatype_user}"
                         password "${sonatype_password}"
