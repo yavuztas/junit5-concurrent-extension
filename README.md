@@ -44,5 +44,20 @@ Since Junit5's invocation design does not allow to execute methods concurrently,
 
 See the implementation details in [ConcurrentExtension.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/main/java/dev/yavuztas/junit/ConcurrentExtension.java)
 
+### Installation
+#### Maven
+```xml
+<dependency>
+  <groupId>dev.yavuztas</groupId>
+  <artifactId>junit5-concurrent-extension</artifactId>
+  <version>1.0</version>
+  <scope>test</scope>
+</dependency>
+```
+#### Gradle
+```groovy
+testImplementation 'dev.yavuztas:junit5-concurrent-extension:1.0'
+```
+
 ### Java Version
 This library supports Java version >= 8.
