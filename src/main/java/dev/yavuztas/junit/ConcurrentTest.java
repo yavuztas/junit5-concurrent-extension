@@ -23,6 +23,14 @@ public @interface ConcurrentTest {
   int count() default 10;
 
   /**
+   * Set true to override: <pre>ConcurrentExtension.withGlobalThreadCount</pre>
+   *
+   * @return true if ConcurrentTest.count setting overrides
+   * ConcurrentExtension.withGlobalThreadCount
+   */
+  boolean overrideGlobal() default false;
+
+  /**
    * Set true to print extra information in the following format:
    * <pre>
    *   Thread#19 - testMethodName()

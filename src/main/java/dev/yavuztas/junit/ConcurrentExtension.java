@@ -104,7 +104,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
     Preconditions.condition(count > 0, () -> String.format(
         "Configuration error: @ConcurrentTest on method [%s] must be declared with a positive 'count'.",
         method));
-    return this.globalThreadCount > 0 ? this.globalThreadCount : count;
+    return !concurrent.overrideGlobal() && this.globalThreadCount > 0 ? this.globalThreadCount : count;
   }
 
   private Timeout timeout(Class<?> clazz, Method method) {
