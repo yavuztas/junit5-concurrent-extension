@@ -54,13 +54,13 @@ See the implementation details in [ConcurrentExtension.java](https://github.com/
 <dependency>
   <groupId>dev.yavuztas</groupId>
   <artifactId>junit5-concurrent-extension</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
   <scope>test</scope>
 </dependency>
 ```
 #### Gradle
 ```groovy
-testImplementation 'dev.yavuztas:junit5-concurrent-extension:1.1'
+testImplementation 'dev.yavuztas:junit5-concurrent-extension:1.2'
 ```
 
 ### Java Version
