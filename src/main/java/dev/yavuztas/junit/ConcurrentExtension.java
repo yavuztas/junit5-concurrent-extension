@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
@@ -17,7 +18,7 @@ import org.junit.platform.commons.util.ReflectionUtils;
 
 public class ConcurrentExtension implements InvocationInterceptor {
 
-  private int globalThreadCount;
+  protected int globalThreadCount;
 
   /**
    * Overrides @{@link ConcurrentTest} count parameter globally.
@@ -29,6 +30,14 @@ public class ConcurrentExtension implements InvocationInterceptor {
     final ConcurrentExtension instance = new ConcurrentExtension();
     instance.globalThreadCount = threadCount;
     return instance;
+  }
+
+  protected void invokeTestMethod(ReflectiveInvocationContext<Method> invocationContext) {
+    ReflectionUtils.invokeMethod(
+        invocationContext.getExecutable(),
+        invocationContext.getTarget().orElse(null),
+        invocationContext.getArguments().toArray()
+    );
   }
 
   @Override
@@ -46,7 +55,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
     }
 
     final ConcurrentTest concurrentTest = annotation.get();
-    final Throwable[] exception = new Throwable[1];
+    final AtomicReference<Throwable> throwable = new AtomicReference<>();
     final int threadCount = threadCount(concurrentTest, testMethod);
     final ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
     for (int i = 0; i < threadCount; i++) {
@@ -55,21 +64,18 @@ public class ConcurrentExtension implements InvocationInterceptor {
           if (concurrentTest.printInfo()) {
             printInfo(testMethod);
           }
-          ReflectionUtils.invokeMethod(
-              testMethod,
-              invocationContext.getTarget().orElse(null),
-              invocationContext.getArguments().toArray()
-          );
+          this.invokeTestMethod(invocationContext);
         } catch (Throwable t) {
-          exception[0] = t;
+          throwable.set(t);
         }
       }, executorService);
     }
     awaitTerminationAfterShutdown(executorService,
         timeout(invocationContext.getTargetClass(), testMethod));
 
-    if (exception[0] != null) {
-      throw exception[0];
+    final Throwable t = throwable.get();
+    if (t != null) {
+      throw t;
     }
 
     // skip the junit invocation because we manually invoked the method

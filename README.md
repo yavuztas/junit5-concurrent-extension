@@ -26,9 +26,13 @@ public class ConcurrencyTest {
 
 }
 ```
-See other examples:
+Other examples:
 - [Junit5DynamicExtensionTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/Junit5DynamicExtensionTest.java)
 - [Junit5TimeoutCapableConcurrentTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/Junit5TimeoutCapableConcurrentTest.java)
+- [Junit5CustomizeMethodInvocationTest.java](https://github.com/yavuztas/junit5-concurrent-extension/blob/master/src/test/java/dev/yavuztas/junit/Junit5CustomizeMethodInvocationTest.java)
+
+The demo project (demonstrates how to use the plugin): 
+- [junit5-demo](https://github.com/yavuztas/junit5-demo)
 
 ### Motivation
 Junit5's *ExecutionMode.CONCURRENT* currently doesn't support running a test method multiple times, ideally, amount of parallel thread count.
